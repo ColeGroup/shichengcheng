@@ -1,0 +1,8 @@
+{"type":"FeatureCollection","features":[{"type":"Feature",
+    "geometry":{"type":"MultiLineString","coordinates":[
+        [[121.148931,30.050727], [121.149361299823,30.069971308151167],
+        [121.148931,30.050727], [121.149361299823,30.069971308151167]
+
+    ]
+]},
+    "properties":{"highway":"trunk_link"},"id":"fid-1f50d501_16955ec34c0_-7e92"}]}
