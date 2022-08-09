@@ -10,7 +10,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js"></script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/libs/stats.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/maptalks.three@latest/dist/maptalks.three.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/maptalks.three@latest/dist/maptalks.three.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/mapbox-gl/2.9.1/mapbox-gl.js"></script>
     <link href="https://cdn.bootcdn.net/ajax/libs/mapbox-gl/2.9.1/mapbox-gl.css" rel="stylesheet">
     <script src="./js/maptalks.mapboxgl.js"></script>
@@ -34,7 +35,7 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.0/mapbox-gl-language.js'></script>
 
-    
+
     <style>
         html,
         body {
@@ -47,13 +48,13 @@
         #map {
             width: 100%;
             height: 100%;
-            
+
         }
+
         .maptalks-attribution,
         .mapboxgl-ctrl-bottom-left,
-        .mapboxgl-ctrl-bottom-right
-        {
-        display: none;
+        .mapboxgl-ctrl-bottom-right {
+            display: none;
         }
     </style>
 </head>
@@ -76,28 +77,28 @@
         // });
         // mapbox作为底图
         mapboxgl.accessToken = 'pk.eyJ1Ijoid2FuZ2p1bjEzMDMiLCJhIjoiY2l4OHBscnYwMDAwdTJ5cWY5cnRrZGM0ZSJ9.FQy75sTd5x1dujqvTsLzvA';
-            var baseLayer = new maptalks.MapboxglLayer('tile', {
-                glOptions: {
-                    'style': 'mapbox://styles/mapbox/dark-v9',
-                }
-            })
-            var map = new maptalks.Map("map", {
-                maxPitch: 100,
-                center: [121.148931, 30.050727],
-                zoom: 15,
-                maxZoom:16,
-                pitch: 80,
-                bearing: 180,
-                // seamlessZoom:false,
-                baseLayer: baseLayer
-            });
+        var baseLayer = new maptalks.MapboxglLayer('tile', {
+            glOptions: {
+                'style': 'mapbox://styles/mapbox/dark-v9',
+            }
+        })
+        var map = new maptalks.Map("map", {
+            maxPitch: 100,
+            center: [121.148931, 30.050727],
+            zoom: 15,
+            maxZoom: 16,
+            pitch: 80,
+            bearing: 180,
+            // seamlessZoom:false,
+            baseLayer: baseLayer
+        });
         //设置mapbox地图为中文
         mapboxgl.setRTLTextPlugin(
-        "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.1.0/mapbox-gl-rtl-text.js"
-      );
-    var language = new MapboxLanguage({ defaultLanguage: "zh" });
-    var glMap = baseLayer.getGlMap();
-      glMap.addControl(language);
+            "https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.1.0/mapbox-gl-rtl-text.js"
+        );
+        var language = new MapboxLanguage({ defaultLanguage: "zh" });
+        var glMap = baseLayer.getGlMap();
+        glMap.addControl(language);
 
         maptalks.ThreeLayer.prototype.coordinateToXYZ = function (coordinate, height = 0) {
             const z = this.distanceToVector3(height, height).x;
@@ -142,8 +143,8 @@
         };
         threeLayer.addTo(map);
 
-      //辉光设置
-         maptalks.ThreeLayer.prototype.initBloom = function () {
+        //辉光设置
+        maptalks.ThreeLayer.prototype.initBloom = function () {
             const params = {
                 exposure: 0.5,
                 bloomStrength: 1.5,
@@ -205,53 +206,53 @@
 
         //添加自定义模型
         function addGltf() {
-        var loader = new THREE.GLTFLoader();
-         loader.load('./data/model/building.gltf', function (gltf) {
-             model = gltf.scene;
-             model.rotation.x = Math.PI / 2;
-             model.scale.set(0.5, 0.5, 0.5);  
-             model.position.copy(threeLayer.coordinateToVector3( [121.147931,30.049727]));
-            //  model.children[0].children[0].layers.enable(1)
-            //  model.children[0].children[1].layers.enable(1)
-            //  model.children[0].children[2].layers.enable(1)
-            //  model.children[0].children[3].layers.enable(1)
-            //  model.children[0].children[4].layers.enable(1)
-             console.log(model)
-             console.log(model.children[0])
-             console.log(model.children[0].children[0])
-             threeLayer.addMesh(model);
+            var loader = new THREE.GLTFLoader();
+            loader.load('./data/model/building.gltf', function (gltf) {
+                model = gltf.scene;
+                model.rotation.x = Math.PI / 2;
+                model.scale.set(0.5, 0.5, 0.5);
+                model.position.copy(threeLayer.coordinateToVector3([121.147931, 30.049727]));
+                //  model.children[0].children[0].layers.enable(1)
+                //  model.children[0].children[1].layers.enable(1)
+                //  model.children[0].children[2].layers.enable(1)
+                //  model.children[0].children[3].layers.enable(1)
+                //  model.children[0].children[4].layers.enable(1)
+                console.log(model)
+                console.log(model.children[0])
+                console.log(model.children[0].children[0])
+                threeLayer.addMesh(model);
             });
         }
 
-        
+
         var params = {
-        rotate: true
-    };
-    //流光线条设置
-    var meshes1 = [];
-    //   function loadRoad(geojsonURL, textureURL) {
-    //         fetch(geojsonURL).then(function (res) {
-    //             return res.text();
-    //         }).then(function (text) {
-    //             return JSON.parse(text);
-    //         }).then(function (geojson) {
-    //             let texture = new THREE.TextureLoader().load(textureURL);
-    //             texture.anisotropy = 16;
-    //             texture.wrapS = THREE.RepeatWrapping;
-    //             texture.wrapT = THREE.RepeatWrapping;
-    //             let camera = threeLayer.getCamera();
-    //             let roadmaterial = new MeshLineMaterial({
-    //                 color:'#ff6f3f',
-    //                 // opacity:1,
-    //                 map: texture,
-    //                 useMap: true,
-    //                 lineWidth: 10,
-    //                 sizeAttenuation: false,
-    //                 alphaTest:0.5,
-    //                 transparent: true,
-    //                 near: camera.near,
-    //                 far: camera.far
-    //             });
+            rotate: true
+        };
+        //流光线条设置
+        var meshes1 = [];
+        //   function loadRoad(geojsonURL, textureURL) {
+        //         fetch(geojsonURL).then(function (res) {
+        //             return res.text();
+        //         }).then(function (text) {
+        //             return JSON.parse(text);
+        //         }).then(function (geojson) {
+        //             let texture = new THREE.TextureLoader().load(textureURL);
+        //             texture.anisotropy = 16;
+        //             texture.wrapS = THREE.RepeatWrapping;
+        //             texture.wrapT = THREE.RepeatWrapping;
+        //             let camera = threeLayer.getCamera();
+        //             let roadmaterial = new MeshLineMaterial({
+        //                 color:'#ff6f3f',
+        //                 // opacity:1,
+        //                 map: texture,
+        //                 useMap: true,
+        //                 lineWidth: 10,
+        //                 sizeAttenuation: false,
+        //                 alphaTest:0.5,
+        //                 transparent: true,
+        //                 near: camera.near,
+        //                 far: camera.far
+        //             });
         const lineColor2 = 'rgba(255, 255, 255, 0)'  //底线颜色 最后一位控制底线的透明度（0关闭，1开启）
         const lightColor2 = 'rgba(255, 111, 63, 100)'                   // 流光线颜色
         const length2 = 8                        //流光线长度
@@ -276,7 +277,7 @@
                     gradient.addColorStop(isHalf2 ? length2 / 10 / 2 : length2 / 10, lightColor2);
                     // gradient.addColorStop(0.8, lineColor);
                     gradient.addColorStop(length2 / 10, lineColor2);
-                    gradient.addColorStop(length/10, lineColor2);
+                    gradient.addColorStop(length / 10, lineColor2);
                     gradient.addColorStop(1, lineColor2);
                     ctx.fillStyle = gradient;
                     ctx.fillRect(0, 0, 256, 1);
@@ -304,12 +305,12 @@
                         const len = lineLength(lineString);
                         return len > 8000;
                     }).map(lineString => {
-                    const line1 = new SpriteLine(lineString, { altitude: 0 }, roadmaterial, threeLayer);
-                    console.log(line1)
-                    line1.getObject3d().children[0].layers.enable(1)
-                    return line1;
+                        const line1 = new SpriteLine(lineString, { altitude: 0 }, roadmaterial, threeLayer);
+                        console.log(line1)
+                        line1.getObject3d().children[0].layers.enable(1)
+                        return line1;
                     });
-                    
+
                     threeLayer.addMesh(lines1);
                     meshes1 = meshes1.concat(lines1);
                 }
@@ -378,7 +379,7 @@
                     gradient.addColorStop(isHalf ? length / 10 / 2 : length / 10, lightColor);
                     // gradient.addColorStop(0.8, lineColor);
                     gradient.addColorStop(length / 10, lineColor);
-                    gradient.addColorStop(length/10, lineColor);
+                    gradient.addColorStop(length / 10, lineColor);
                     gradient.addColorStop(1, lineColor);
                     ctx.fillStyle = gradient;
                     ctx.fillRect(0, 0, 256, 1);
@@ -408,8 +409,8 @@
                         const len = lineLength(lineString);
                         return len > 800;
                     }).map(lineString => {
-                        const len = lineLength(lineString)-1000
-                        const line2 = new ArcLine(lineString, { altitude: 0, height: len / 8, speed: len / 30000}, material1, threeLayer);
+                        const len = lineLength(lineString) - 1000
+                        const line2 = new ArcLine(lineString, { altitude: 0, height: len / 8, speed: len / 30000 }, material1, threeLayer);
                         console.log(line2)
                         line2.getObject3d().layers.enable(1)
                         line2.setToolTip(len);
@@ -418,15 +419,15 @@
                     threeLayer.addMesh(lines2);
                     meshes2 = meshes2.concat(lines2);
                 }
-                });
+            });
         }
-        
+
         //设置建筑颜色
         var buildingMeshes1 = [];
         var buildingMeshes2 = [];
         var material3 = getBuildingsMaterial3();
-            // material3.vertexColors = THREE.VertexColors;
-            // const topColor1 = new THREE.Color('rgb(116,125,142)');
+        // material3.vertexColors = THREE.VertexColors;
+        // const topColor1 = new THREE.Color('rgb(116,125,142)');
         function getBuildingsMaterial3() {
             //建筑贴图
             // const texture = new THREE.TextureLoader().load('./model/11.png');
@@ -438,35 +439,35 @@
                 // map: texture,
                 transparent: true,
                 // opacity:0.5,
-                color:'#3f4653'
+                color: '#3f4653'
             });
             return material;
         }
         var material4 = getBuildingsMaterial4();
-            // material4.vertexColors = THREE.VertexColors;
-            // const topColor2 = new THREE.Color('rgb(0,255,0)');
+        // material4.vertexColors = THREE.VertexColors;
+        // const topColor2 = new THREE.Color('rgb(0,255,0)');
         function getBuildingsMaterial4() {
             // const texture2 = new THREE.TextureLoader().load('./model/11.png');
             // texture2.needsUpdate = true; //使用贴图时进行更新
             // texture2.wrapS = texture2.wrapT = THREE.RepeatWrapping;
             // texture2.repeat.set(4, 10);
-             const material = new THREE.MeshPhongMaterial({
-            // const material = new THREE.MeshLambertMaterial({
+            const material = new THREE.MeshPhongMaterial({
+                // const material = new THREE.MeshLambertMaterial({
                 // map: texture2,
                 transparent: true,
                 opacity: 0.8,
-                color:'#2f5671',
+                color: '#2f5671',
             });
             return material;
         }
-       //设置建筑轮廓线条
+        //设置建筑轮廓线条
         const lineMaterial1 = new THREE.LineBasicMaterial({
-        color: "rgb(15,159,190)",
-        transparent: true,
-        linewidth: 1,
-        // opacity: 0.7,
-        //depthTest: true,
-    });
+            color: "rgb(15,159,190)",
+            transparent: true,
+            linewidth: 1,
+            // opacity: 0.7,
+            //depthTest: true,
+        });
         //解决z-flighting
         lineMaterial1.polygonOffset = true;
         lineMaterial1.depthTest = true;
@@ -474,21 +475,21 @@
         lineMaterial1.polygonOffsetUnits = 1.0;
 
         const lineMaterial2 = new THREE.LineBasicMaterial({
-                // 线的颜色
-                color: "red",
-                transparent: true,
-                linewidth: 1,
-                opacity: 0.7,
-                //depthTest: true,
-            });
-            //解决z-flighting
-            lineMaterial2.polygonOffset = true;
-            lineMaterial2.depthTest = true;
-            lineMaterial2.polygonOffsetFactor = 1;
-            lineMaterial2.polygonOffsetUnits = 1.0;
+            // 线的颜色
+            color: "red",
+            transparent: true,
+            linewidth: 1,
+            opacity: 0.7,
+            //depthTest: true,
+        });
+        //解决z-flighting
+        lineMaterial2.polygonOffset = true;
+        lineMaterial2.depthTest = true;
+        lineMaterial2.polygonOffsetFactor = 1;
+        lineMaterial2.polygonOffsetUnits = 1.0;
 
 
-         //加载建筑geojson数据       
+        //加载建筑geojson数据       
         const polygons = [];
         function loadBuilding() {
             fetch('./data/geojson/city2.geojson').then(function (res) {
@@ -496,7 +497,7 @@
             }).then(function (text) {
                 return JSON.parse(text).features;
             }).then(function (features) {
-                
+
                 // var polygons =features.map(f => {
                 // const polygon = maptalks.GeoJSON.toGeometry(f);
                 // var heightPerLevel = 1;
@@ -505,141 +506,141 @@
                 //     height: heightPerLevel * height,
                 // });
                 // return polygon;
-            
-             features.forEach(function (g) {
-                var heightPerLevel = 1;
-                var height = g.properties.height || 1;
-                // const polygon = maptalks.GeoJSON.toGeometry(g);
-                // polygons.push(polygon)
-                if(height < 50) {
-                var mesh3 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(g), {
-                    // var mesh3 = threeLayer.toExtrudePolygons(polygons, {
-                    height: heightPerLevel * height,
-                    // topColor: '#bbb',
-                    // bottomColor:'#fff',
-                    interactive: false
-                }, material3);
-                mesh3.getObject3d().layers.enable(1);
-                // const bufferGeometry = mesh3.getObject3d().geometry;
-                // const geometry = new THREE.Geometry().fromBufferGeometry(bufferGeometry);
-                // const { vertices, faces, faceVertexUvs } = geometry;
-                // for (let i = 0, len = faces.length; i < len; i++) {
-                //     const { a, b, c } = faces[i];
-                //     const p1 = vertices[a], p2 = vertices[b], p3 = vertices[c];
-                //     //top face
-                //     if (p1.z > 0 && p2.z > 0 && p3.z > 0) {
-                //         const vertexColors = faces[i].vertexColors;
-                //         for (let j = 0, len1 = vertexColors.length; j < len1; j++) {
-                //             vertexColors[j].r = topColor1.r;
-                //             vertexColors[j].g = topColor1.g;
-                //             vertexColors[j].b = topColor1.b;
-                //         }
-                //         const uvs = faceVertexUvs[0][i];
-                //         for (let j = 0, len1 = uvs.length; j < len1; j++) {
-                //             uvs[j].x = 0;
-                //             uvs[j].y = 0;
-                //         }
-                //     }
-                // }
-                // mesh3.getObject3d().geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-                // bufferGeometry.dispose();
-                // geometry.dispose();
 
-                buildingMeshes1.push(mesh3);
-                // var outLine1 = new OutLine(mesh3, { interactive: false }, lineMaterial1, threeLayer);
-                // buildingMeshes1.push(outLine1);
-                // mesh3.getObject3d().layers.enable(1);
-                
-            }
-             
-             else if (height >= 50) {
-                var mesh4 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(g), {
-                        height: heightPerLevel * height,
-                        // topColor: '#fff',
-                        interactive: false
-                    }, material4);
-                    mesh4.getObject3d().layers.enable(1);
-                    // const bufferGeometry = mesh4.getObject3d().geometry;
-                    // const geometry = new THREE.Geometry().fromBufferGeometry(bufferGeometry);
-                    // const { vertices, faces, faceVertexUvs } = geometry;
-                    //     for (let i = 0, len = faces.length; i < len; i++) {
-                    //         const { a, b, c } = faces[i];
-                    //         const p1 = vertices[a], p2 = vertices[b], p3 = vertices[c];
-                    //         //top face
-                    //         if (p1.z > 0 && p2.z > 0 && p3.z > 0) {
-                    //             const vertexColors = faces[i].vertexColors;
-                    //             for (let j = 0, len1 = vertexColors.length; j < len1; j++) {
-                    //                 vertexColors[j].r = topColor2.r;
-                    //                 vertexColors[j].g = topColor2.g;
-                    //                 vertexColors[j].b = topColor2.b;
-                    //             }
-                    //             const uvs = faceVertexUvs[0][i];
-                    //             for (let j = 0, len1 = uvs.length; j < len1; j++) {
-                    //                 uvs[j].x = 0;
-                    //                 uvs[j].y = 0;
-                    //             }
-                    //         }
-                    //     }
-                    // mesh4.getObject3d().geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-                    // bufferGeometry.dispose();
-                    // geometry.dispose();
-                    buildingMeshes2.push(mesh4);
-                    // var outLine2 = new OutLine(mesh4, { interactive: false }, lineMaterial2, threeLayer);
-                    // buildingMeshes2.push(outLine2);
-                    // threeLayer.addMesh(buildingMeshes2)
-                
-             } 
-            }); 
+                features.forEach(function (g) {
+                    var heightPerLevel = 1;
+                    var height = g.properties.height || 1;
+                    // const polygon = maptalks.GeoJSON.toGeometry(g);
+                    // polygons.push(polygon)
+                    if (height < 50) {
+                        var mesh3 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(g), {
+                            // var mesh3 = threeLayer.toExtrudePolygons(polygons, {
+                            height: heightPerLevel * height,
+                            // topColor: '#bbb',
+                            // bottomColor:'#fff',
+                            interactive: false
+                        }, material3);
+                        mesh3.getObject3d().layers.enable(1);
+                        // const bufferGeometry = mesh3.getObject3d().geometry;
+                        // const geometry = new THREE.Geometry().fromBufferGeometry(bufferGeometry);
+                        // const { vertices, faces, faceVertexUvs } = geometry;
+                        // for (let i = 0, len = faces.length; i < len; i++) {
+                        //     const { a, b, c } = faces[i];
+                        //     const p1 = vertices[a], p2 = vertices[b], p3 = vertices[c];
+                        //     //top face
+                        //     if (p1.z > 0 && p2.z > 0 && p3.z > 0) {
+                        //         const vertexColors = faces[i].vertexColors;
+                        //         for (let j = 0, len1 = vertexColors.length; j < len1; j++) {
+                        //             vertexColors[j].r = topColor1.r;
+                        //             vertexColors[j].g = topColor1.g;
+                        //             vertexColors[j].b = topColor1.b;
+                        //         }
+                        //         const uvs = faceVertexUvs[0][i];
+                        //         for (let j = 0, len1 = uvs.length; j < len1; j++) {
+                        //             uvs[j].x = 0;
+                        //             uvs[j].y = 0;
+                        //         }
+                        //     }
+                        // }
+                        // mesh3.getObject3d().geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+                        // bufferGeometry.dispose();
+                        // geometry.dispose();
+
+                        buildingMeshes1.push(mesh3);
+                        // var outLine1 = new OutLine(mesh3, { interactive: false }, lineMaterial1, threeLayer);
+                        // buildingMeshes1.push(outLine1);
+                        // mesh3.getObject3d().layers.enable(1);
+
+                    }
+
+                    else if (height >= 50) {
+                        var mesh4 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(g), {
+                            height: heightPerLevel * height,
+                            // topColor: '#fff',
+                            interactive: false
+                        }, material4);
+                        mesh4.getObject3d().layers.enable(1);
+                        // const bufferGeometry = mesh4.getObject3d().geometry;
+                        // const geometry = new THREE.Geometry().fromBufferGeometry(bufferGeometry);
+                        // const { vertices, faces, faceVertexUvs } = geometry;
+                        //     for (let i = 0, len = faces.length; i < len; i++) {
+                        //         const { a, b, c } = faces[i];
+                        //         const p1 = vertices[a], p2 = vertices[b], p3 = vertices[c];
+                        //         //top face
+                        //         if (p1.z > 0 && p2.z > 0 && p3.z > 0) {
+                        //             const vertexColors = faces[i].vertexColors;
+                        //             for (let j = 0, len1 = vertexColors.length; j < len1; j++) {
+                        //                 vertexColors[j].r = topColor2.r;
+                        //                 vertexColors[j].g = topColor2.g;
+                        //                 vertexColors[j].b = topColor2.b;
+                        //             }
+                        //             const uvs = faceVertexUvs[0][i];
+                        //             for (let j = 0, len1 = uvs.length; j < len1; j++) {
+                        //                 uvs[j].x = 0;
+                        //                 uvs[j].y = 0;
+                        //             }
+                        //         }
+                        //     }
+                        // mesh4.getObject3d().geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+                        // bufferGeometry.dispose();
+                        // geometry.dispose();
+                        buildingMeshes2.push(mesh4);
+                        // var outLine2 = new OutLine(mesh4, { interactive: false }, lineMaterial2, threeLayer);
+                        // buildingMeshes2.push(outLine2);
+                        // threeLayer.addMesh(buildingMeshes2)
+
+                    }
+                });
                 threeLayer.addMesh(buildingMeshes1)
                 threeLayer.addMesh(buildingMeshes2)
             });
-                    }
+        }
 
-            
 
-                // for (let feature of features) {
-                //     let height = feature.properties.height || 1;
-                    // let material3 = new THREE.MeshPhongMaterial({
-                    //     color: getColor(height)
-                    // });
-                    // let material3 = new THREE.MeshBasicMaterial({
-                    //     color: getColor(height),
-                    //     transparent: true,
-                    //     opacity:0.5
-                    // })
-                    // let extrudePolygon = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                    //     interactive: false,
-                    //     height: extrudeFactor * height,
-                    //     topColor: '#fff',
-                    //     // bottomColor:'#fff'
-                        
-                    // }, material3);
-                    // threeLayer.addMesh(extrudePolygon);
 
-                    //根据建筑物不同设置不同颜色
-                    // if(height < 50) {
-                    // let extrudePolygon = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                    //     // let mesh1 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                    //     interactive: false,
-                    //     height: extrudeFactor * height,
-                    //     topColor: '#fff',
-                    // }, material3);
-                    // meshs1.push(mesh1)
-                    // var outLine1 = new OutLine(mesh1, { interactive: false }, lineMaterial1, threeLayer);
-                    //     meshs1.push(outLine1);
-                    // threeLayer.addMesh(extrudePolygon);
-                    // threeLayer.addMesh(meshs1);
-                    // }
-                // else if(height >= 50){
-                //     let extrudePolygon1 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                //         interactive: false,
-                //         height: extrudeFactor * height,
-                //         topColor: '#fff',
-                //     }, material4);
-                //     threeLayer.addMesh(extrudePolygon1);
-                //  }
-                // }
-         
+        // for (let feature of features) {
+        //     let height = feature.properties.height || 1;
+        // let material3 = new THREE.MeshPhongMaterial({
+        //     color: getColor(height)
+        // });
+        // let material3 = new THREE.MeshBasicMaterial({
+        //     color: getColor(height),
+        //     transparent: true,
+        //     opacity:0.5
+        // })
+        // let extrudePolygon = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
+        //     interactive: false,
+        //     height: extrudeFactor * height,
+        //     topColor: '#fff',
+        //     // bottomColor:'#fff'
+
+        // }, material3);
+        // threeLayer.addMesh(extrudePolygon);
+
+        //根据建筑物不同设置不同颜色
+        // if(height < 50) {
+        // let extrudePolygon = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
+        //     // let mesh1 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
+        //     interactive: false,
+        //     height: extrudeFactor * height,
+        //     topColor: '#fff',
+        // }, material3);
+        // meshs1.push(mesh1)
+        // var outLine1 = new OutLine(mesh1, { interactive: false }, lineMaterial1, threeLayer);
+        //     meshs1.push(outLine1);
+        // threeLayer.addMesh(extrudePolygon);
+        // threeLayer.addMesh(meshs1);
+        // }
+        // else if(height >= 50){
+        //     let extrudePolygon1 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
+        //         interactive: false,
+        //         height: extrudeFactor * height,
+        //         topColor: '#fff',
+        //     }, material4);
+        //     threeLayer.addMesh(extrudePolygon1);
+        //  }
+        // }
+
         // function getColor(height) {
         //     let rgb;
         //     if (height < 50) {
@@ -877,39 +878,39 @@
         //设置冲击环
         var ringObj, ringmaterial;
         function addRingEffect() {
-                ringmaterial = getMaterial1(0);
-                ringObj = new RingEffect(map.getCenter(), {
-                    radius: 2000
-                }, ringmaterial, threeLayer)
-                threeLayer.addMesh(ringObj);
-            }
+            ringmaterial = getMaterial1(0);
+            ringObj = new RingEffect(map.getCenter(), {
+                radius: 2000
+            }, ringmaterial, threeLayer)
+            threeLayer.addMesh(ringObj);
+        }
         function getMaterial1(type = 0) {
-                var ringShield = {
-                    uniforms: {
-                        color: {
-                            type: "c",
-                            value: new THREE.Color("red")
-                        },
-                        time: {
-                            type: "f",
-                            value: -0.5
-                        },
-                        type: {
-                            type: "f",
-                            value: type || 0
-                        },
-                        num: {
-                            type: "f",
-                            value: 2
-                        }
+            var ringShield = {
+                uniforms: {
+                    color: {
+                        type: "c",
+                        value: new THREE.Color("red")
                     },
-                    vertexShaderSource: `
+                    time: {
+                        type: "f",
+                        value: -0.5
+                    },
+                    type: {
+                        type: "f",
+                        value: type || 0
+                    },
+                    num: {
+                        type: "f",
+                        value: 2
+                    }
+                },
+                vertexShaderSource: `
                     varying vec2 vUv;
                     void main(){
                             vUv = uv;
                             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                     }`,
-                    fragmentShaderSource: `
+                fragmentShaderSource: `
                     uniform float time;
                     uniform vec3 color;
                     uniform float type;
@@ -936,22 +937,22 @@
                         }
                         gl_FragColor = vec4(color,alpha );
                     }`
-                };
-                let material = new THREE.ShaderMaterial({
-                    uniforms: ringShield.uniforms,
-                    defaultAttributeValues: {},
-                    vertexShader: ringShield.vertexShaderSource,
-                    fragmentShader: ringShield.fragmentShaderSource,
-                    blending: THREE.AdditiveBlending,
-                    depthWrite: !1,
-                    depthTest: !0,
-                    side: THREE.DoubleSide,
-                    transparent: !0,
-                    fog: !0
-                });
-                return material;
-            }
-    
+            };
+            let material = new THREE.ShaderMaterial({
+                uniforms: ringShield.uniforms,
+                defaultAttributeValues: {},
+                vertexShader: ringShield.vertexShaderSource,
+                fragmentShader: ringShield.fragmentShaderSource,
+                blending: THREE.AdditiveBlending,
+                depthWrite: !1,
+                depthTest: !0,
+                side: THREE.DoubleSide,
+                transparent: !0,
+                fog: !0
+            });
+            return material;
+        }
+
         // function initGui() {
         //     var params = {
         //         add: true,
@@ -993,7 +994,7 @@
 
 
 
-       //设置流光的速度参数
+        //设置流光的速度参数
         var OPTIONS = {
             altitude: 0,
             speed: 0.02
@@ -1032,13 +1033,13 @@
                 const center = lineString.getCenter();
                 const v = layer.coordinateToVector3(center, z);
                 this.getObject3d().position.copy(v);
-            
-                
+
+
             }
             _animation() {
                 this.options.offset.x -= this.options.speed * this.options.clock.getDelta();
             }
-            
+
         }
         var OPTIONS1 = {
             altitude: 0,
@@ -1050,7 +1051,7 @@
                 super();
                 options.offset = material.uniforms.offset.value;
                 options.clock = new THREE.Clock();
-               
+
                 //geoutil.js getLinePosition
                 options = maptalks.Util.extend({}, OPTIONS1, options, { layer, lineString });
                 this._initOptions(options);
@@ -1076,13 +1077,13 @@
                 this._setPickObject3d();
                 this._init();
                 const tween = new TWEEN.Tween(this.options.offset) // 飞线移动动画
-                    .to({ x: this.options.offset.x-1}, (6000 / speed1))
+                    .to({ x: this.options.offset.x - 1 }, (6000 / speed1))
                     // .delay(3000)
                     .start()
                     .repeat(Infinity)
-            
+
             }
-            
+
             // _animation() {
             //     const t = this.options.clock.getDelta()
             //     this.options.offset.x -= this.options.speed *t;
@@ -1159,102 +1160,102 @@
             return points;
         }
 
-    var OPTIONS = {
-                altitude: 0,
-                speed: 0.015,
-                height: 10
-            };
+        var OPTIONS = {
+            altitude: 0,
+            speed: 0.015,
+            height: 10
+        };
         class RippleWall extends maptalks.BaseObject {
-                constructor(polygon, options, material, layer) {
-                    if (Array.isArray(polygon)) {
-                        polygon = new maptalks.Polygon([polygon]);
-                    }
-                    options = maptalks.Util.extend({}, OPTIONS, options, { layer, polygon });
-                    super();
-                    this._initOptions(options);
-                    const { altitude, height } = options;
-                    //generate geometry
-                    //Initialize internal object3d
-                    const geometry = this.createGeometry(polygon, layer, height)
-                    this._createMesh(geometry, material);
-
-                    //set object3d position
-                    const z = layer.altitudeToVector3(altitude, altitude).x;
-                    const position = layer.coordinateToVector3(polygon.getCenter(), z);
-                    this.getObject3d().position.copy(position);
+            constructor(polygon, options, material, layer) {
+                if (Array.isArray(polygon)) {
+                    polygon = new maptalks.Polygon([polygon]);
                 }
+                options = maptalks.Util.extend({}, OPTIONS, options, { layer, polygon });
+                super();
+                this._initOptions(options);
+                const { altitude, height } = options;
+                //generate geometry
+                //Initialize internal object3d
+                const geometry = this.createGeometry(polygon, layer, height)
+                this._createMesh(geometry, material);
 
-
-                createGeometry(polygon, layer, height) {
-                    height = layer.altitudeToVector3(height, height).x;
-                    const centerPt = layer.coordinateToVector3(polygon.getCenter());
-                    const wall = polygon.getShell();
-                    const positionsV = [];
-                    let joinLonLat = [];
-                    wall.forEach(lnglat => {
-                        const polyPice = layer.coordinateToVector3(lnglat).sub(centerPt);
-                        positionsV.push(polyPice);
-                        joinLonLat.push(polyPice.x);
-                        joinLonLat.push(polyPice.y);
-                    });
-                    for (var a = joinLonLat, polySub = [], o = 0, s = 0; o < a.length - 2; o += 2, s++)
-                        0 === o ?
-                            polySub[0] = Math.sqrt((a[2] - a[0]) * (a[2] - a[0]) + (a[3] - a[1]) * (a[3] - a[1])) :
-                            polySub[s] = polySub[s - 1] + Math.sqrt((a[o + 2] - a[o]) * (a[o + 2] - a[o]) + (a[o + 3] - a[o + 1]) * (a[o + 3] - a[o + 1]));
-                    let pos = [],
-                        uvs = [];
-                    let polylenth = polySub[polySub.length - 1];
-                    for (let d = 0, u = pos.length, p = uvs.length; d < positionsV.length - 1; d++) {
-                        let pv1 = positionsV[d],
-                            pv2 = positionsV[d + 1],
-                            polyPice = polySub[d];
-                        pos[u++] = pv1.x,
-                            pos[u++] = pv1.y,
-                            pos[u++] = 0,
-                            uvs[p++] = 0 === d ? 0 : polySub[d - 1] / polylenth,
-                            uvs[p++] = 0,
-                            pos[u++] = pv2.x,
-                            pos[u++] = pv2.y,
-                            pos[u++] = 0,
-                            uvs[p++] = polyPice / polylenth,
-                            uvs[p++] = 0,
-                            pos[u++] = pv1.x,
-                            pos[u++] = pv1.y,
-                            pos[u++] = height,
-                            uvs[p++] = 0 === d ? 0 : polySub[d - 1] / polylenth,
-                            uvs[p++] = 1,
-                            pos[u++] = pv1.x,
-                            pos[u++] = pv1.y,
-                            pos[u++] = height,
-                            uvs[p++] = 0 === d ? 0 : polySub[d - 1] / polylenth,
-                            uvs[p++] = 1,
-                            pos[u++] = pv2.x,
-                            pos[u++] = pv2.y,
-                            pos[u++] = 0,
-                            uvs[p++] = polyPice / polylenth,
-                            uvs[p++] = 0,
-                            pos[u++] = pv2.x,
-                            pos[u++] = pv2.y,
-                            pos[u++] = height,
-                            uvs[p++] = polyPice / polylenth,
-                            uvs[p++] = 1
-                    }
-                    var geometry = new THREE.BufferGeometry;
-                    geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pos), 3));
-                    geometry.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(uvs), 2));
-                    return geometry;
-                }
-
-
-                _animation() {
-                    const wall = this.getObject3d();
-                    const speed = this.getOptions().speed;
-                    wall.material.uniforms.time.value += speed;
-                }
+                //set object3d position
+                const z = layer.altitudeToVector3(altitude, altitude).x;
+                const position = layer.coordinateToVector3(polygon.getCenter(), z);
+                this.getObject3d().position.copy(position);
             }
 
+
+            createGeometry(polygon, layer, height) {
+                height = layer.altitudeToVector3(height, height).x;
+                const centerPt = layer.coordinateToVector3(polygon.getCenter());
+                const wall = polygon.getShell();
+                const positionsV = [];
+                let joinLonLat = [];
+                wall.forEach(lnglat => {
+                    const polyPice = layer.coordinateToVector3(lnglat).sub(centerPt);
+                    positionsV.push(polyPice);
+                    joinLonLat.push(polyPice.x);
+                    joinLonLat.push(polyPice.y);
+                });
+                for (var a = joinLonLat, polySub = [], o = 0, s = 0; o < a.length - 2; o += 2, s++)
+                    0 === o ?
+                        polySub[0] = Math.sqrt((a[2] - a[0]) * (a[2] - a[0]) + (a[3] - a[1]) * (a[3] - a[1])) :
+                        polySub[s] = polySub[s - 1] + Math.sqrt((a[o + 2] - a[o]) * (a[o + 2] - a[o]) + (a[o + 3] - a[o + 1]) * (a[o + 3] - a[o + 1]));
+                let pos = [],
+                    uvs = [];
+                let polylenth = polySub[polySub.length - 1];
+                for (let d = 0, u = pos.length, p = uvs.length; d < positionsV.length - 1; d++) {
+                    let pv1 = positionsV[d],
+                        pv2 = positionsV[d + 1],
+                        polyPice = polySub[d];
+                    pos[u++] = pv1.x,
+                        pos[u++] = pv1.y,
+                        pos[u++] = 0,
+                        uvs[p++] = 0 === d ? 0 : polySub[d - 1] / polylenth,
+                        uvs[p++] = 0,
+                        pos[u++] = pv2.x,
+                        pos[u++] = pv2.y,
+                        pos[u++] = 0,
+                        uvs[p++] = polyPice / polylenth,
+                        uvs[p++] = 0,
+                        pos[u++] = pv1.x,
+                        pos[u++] = pv1.y,
+                        pos[u++] = height,
+                        uvs[p++] = 0 === d ? 0 : polySub[d - 1] / polylenth,
+                        uvs[p++] = 1,
+                        pos[u++] = pv1.x,
+                        pos[u++] = pv1.y,
+                        pos[u++] = height,
+                        uvs[p++] = 0 === d ? 0 : polySub[d - 1] / polylenth,
+                        uvs[p++] = 1,
+                        pos[u++] = pv2.x,
+                        pos[u++] = pv2.y,
+                        pos[u++] = 0,
+                        uvs[p++] = polyPice / polylenth,
+                        uvs[p++] = 0,
+                        pos[u++] = pv2.x,
+                        pos[u++] = pv2.y,
+                        pos[u++] = height,
+                        uvs[p++] = polyPice / polylenth,
+                        uvs[p++] = 1
+                }
+                var geometry = new THREE.BufferGeometry;
+                geometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pos), 3));
+                geometry.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(uvs), 2));
+                return geometry;
+            }
+
+
+            _animation() {
+                const wall = this.getObject3d();
+                const speed = this.getOptions().speed;
+                wall.material.uniforms.time.value += speed;
+            }
+        }
+
         var OPTIONS3 = {
-        altitude: 0
+            altitude: 0
         };
         class OutLine extends maptalks.BaseObject {
             constructor(mesh, options, material, layer) {
@@ -1270,402 +1271,402 @@
             }
         }
         var OPTIONS4 = {
-                speed: 0.015,
-                radius: 1,
-                altitude: 0,
-                interactive: false
-            };
+            speed: 0.015,
+            radius: 1,
+            altitude: 0,
+            interactive: false
+        };
 
-            /**
-             * custom  component
-             *
-             * you can customize your own components
-             * */
+        /**
+         * custom  component
+         *
+         * you can customize your own components
+         * */
 
-            class RingEffect extends maptalks.BaseObject {
-                constructor(coordinate, options, material, layer) {
-                    options = maptalks.Util.extend({}, OPTIONS4, options, {
-                        layer,
-                        coordinate
-                    });
-                    super();
-                    this._initOptions(options);
-                    const {
-                        altitude,
-                        radius
-                    } = options;
-                    //generate geometry
-                    const r = layer.distanceToVector3(radius, radius).x;
-                    const geometry = new THREE.RingBufferGeometry(0.001, r, 20, 5, 0, Math.PI * 2);
-                    this._createGroup();
-                    const mesh = new THREE.Mesh(geometry, material);
-                    this.getObject3d().add(mesh);
-                    //set object3d position
-                    const z = layer.distanceToVector3(altitude, altitude).x;
-                    const position = layer.coordinateToVector3(coordinate, z);
-                    this.getObject3d().position
-                        .copy(position);
-                }
-
-                _animation() {
-                    const ring = this.getObject3d().children[0];
-                    const speed = this.getOptions().speed;
-                    ring.material.uniforms.time.value += speed;
-                }
+        class RingEffect extends maptalks.BaseObject {
+            constructor(coordinate, options, material, layer) {
+                options = maptalks.Util.extend({}, OPTIONS4, options, {
+                    layer,
+                    coordinate
+                });
+                super();
+                this._initOptions(options);
+                const {
+                    altitude,
+                    radius
+                } = options;
+                //generate geometry
+                const r = layer.distanceToVector3(radius, radius).x;
+                const geometry = new THREE.RingBufferGeometry(0.001, r, 20, 5, 0, Math.PI * 2);
+                this._createGroup();
+                const mesh = new THREE.Mesh(geometry, material);
+                this.getObject3d().add(mesh);
+                //set object3d position
+                const z = layer.distanceToVector3(altitude, altitude).x;
+                const position = layer.coordinateToVector3(coordinate, z);
+                this.getObject3d().position
+                    .copy(position);
             }
 
+            _animation() {
+                const ring = this.getObject3d().children[0];
+                const speed = this.getOptions().speed;
+                ring.material.uniforms.time.value += speed;
+            }
+        }
 
-//信息面板
-//精灵图1
-var layer = new maptalks.VectorLayer('vector').addTo(map);
+
+        //信息面板
+        //精灵图1
+        var layer = new maptalks.VectorLayer('vector').addTo(map);
         var marker1 = new maptalks.Marker(
-            [121.166361299823,30.051971308151167],
-    {
-        
-      "properties": {
+            [121.166361299823, 30.051971308151167],
+            {
 
-        "MyBuildName": '一切正常'
+                "properties": {
+
+                    "MyBuildName": '一切正常'
+                },
+                symbol: [
+                    {
+                        'markerFile': './data/pic/Information panel 1.PNG',
+                        'markerWidth': 120,
+                        'markerHeight': 90,
                     },
-      symbol : [
-        {
-          'markerFile'   : './data/pic/Information panel 1.PNG',
-          'markerWidth'  : 120,
-          'markerHeight' : 90,
-        },
 
-        {
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-          'textFaceName' : 'sans-serif',
-          'textName' : `    
+                    {
+                        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                        'textFaceName': 'sans-serif',
+                        'textName': `    
           区域:地方本部   
           
           状态:正常
           `,
-          'textSize' : 10,
-          'textDy'   : -58,
-          'textDx'   : -60,
-          textHorizontalAlignment: "right",
-          textFill: "#FFFFFF",
-          
-        }
-   
-  
-      ]
-    }
-  ).addTo(layer);
-       
- //精灵图2
+                        'textSize': 10,
+                        'textDy': -58,
+                        'textDx': -60,
+                        textHorizontalAlignment: "right",
+                        textFill: "#FFFFFF",
+
+                    }
+
+
+                ]
+            }
+        ).addTo(layer);
+
+        //精灵图2
 
         var marker2 = new maptalks.Marker(
-            [121.13361299823,30.051971308151167],
-    {
-        
-      "properties": {
-        "MyBuildName": '一切正常'
-                    },
-      symbol : [
-        {
-          'markerFile'   : './data/pic/Information panel 1.PNG',
-          'markerWidth'  : 120,
-          'markerHeight' : 90,
-        },
+            [121.13361299823, 30.051971308151167],
+            {
 
-        {
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-          'textFaceName' : 'sans-serif',
-          'textName' : `    
+                "properties": {
+                    "MyBuildName": '一切正常'
+                },
+                symbol: [
+                    {
+                        'markerFile': './data/pic/Information panel 1.PNG',
+                        'markerWidth': 120,
+                        'markerHeight': 90,
+                    },
+
+                    {
+                        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                        'textFaceName': 'sans-serif',
+                        'textName': `    
           区域:地方本部   
           
           状态:正常
           `,
-          'textSize' : 10,
-          'textDy'   : -58,
-          'textDx'   : -60,
-          textHorizontalAlignment: "right",
-          textFill: "#FFFFFF",
-          
-        }
-   
-  
-      ]
-    }
-  ).addTo(layer);
+                        'textSize': 10,
+                        'textDy': -58,
+                        'textDx': -60,
+                        textHorizontalAlignment: "right",
+                        textFill: "#FFFFFF",
 
-  //精灵图3
+                    }
+
+
+                ]
+            }
+        ).addTo(layer);
+
+        //精灵图3
 
         var marker3 = new maptalks.Marker(
-            [121.149361299823,30.069971308151167],
-    {
-        
-      "properties": {
-        "MyBuildName": '一切正常'
-                    },
-      symbol : [
-        {
-          'markerFile'   : './data/pic/Information panel 1.PNG',
-          'markerWidth'  : 120,
-          'markerHeight' : 90,
-        },
+            [121.149361299823, 30.069971308151167],
+            {
 
-        {
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-          'textFaceName' : 'sans-serif',
-          'textName' : `    
+                "properties": {
+                    "MyBuildName": '一切正常'
+                },
+                symbol: [
+                    {
+                        'markerFile': './data/pic/Information panel 1.PNG',
+                        'markerWidth': 120,
+                        'markerHeight': 90,
+                    },
+
+                    {
+                        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                        'textFaceName': 'sans-serif',
+                        'textName': `    
           区域:地方本部   
           
           状态:正常
           `,
-          'textSize' : 10,
-          'textDy'   : -58,
-          'textDx'   : -60,
-          textHorizontalAlignment: "right",
-          textFill: "#FFFFFF",
-          
-        }
-   
-  
-      ]
-    }
-  ).addTo(layer);
+                        'textSize': 10,
+                        'textDy': -58,
+                        'textDx': -60,
+                        textHorizontalAlignment: "right",
+                        textFill: "#FFFFFF",
+
+                    }
 
 
-//精灵图4
+                ]
+            }
+        ).addTo(layer);
+
+
+        //精灵图4
 
         var marker4 = new maptalks.Marker(
-            [121.149361299823,30.02271308151167],
-    {
-        
-      "properties": {
-        "MyBuildName": '一切正常'
-                    },
-      symbol : [
-        {
-          'markerFile'   : './data/pic/Information panel 2.PNG',
-          'markerWidth'  : 120,
-          'markerHeight' : 90,
-        },
+            [121.149361299823, 30.02271308151167],
+            {
 
-        {
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-          'textFaceName' : 'sans-serif',
-          'textName' : `    
+                "properties": {
+                    "MyBuildName": '一切正常'
+                },
+                symbol: [
+                    {
+                        'markerFile': './data/pic/Information panel 2.PNG',
+                        'markerWidth': 120,
+                        'markerHeight': 90,
+                    },
+
+                    {
+                        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                        'textFaceName': 'sans-serif',
+                        'textName': `    
           区域:地方本部   
           
           状态:失火
           `,
-          'textSize' : 10,
-          'textDy'   : -58,
-          'textDx'   : -60,
-          textHorizontalAlignment: "right",
-          textFill: "#FFFFFF",
-          
-        }
-   
-  
-      ]
-    }
-  ).addTo(layer);
+                        'textSize': 10,
+                        'textDy': -58,
+                        'textDx': -60,
+                        textHorizontalAlignment: "right",
+                        textFill: "#FFFFFF",
 
-  // 加载天空图层
-  var glMap = baseLayer.getGlMap();
-    glMap.on('load', function () {
-        glMap.addLayer({
-            'id': 'sky',
-            'type': 'sky',
-            'paint': {
-                // 'sky-type': 'atmosphere',
-                // "sky-atmosphere-sun": [45.0, 90.0],
-                // 'sky-atmosphere-sun-intensity': 10,
-                // // 'sky-type': 'gradient',
-                // 'sky-gradient': [
-                //     'interpolate',
-                //     ['linear'],
-                //     ['sky-radial-progress'],
-                //     0.8,
-                //     'rgba(17,156,255,0.28)',
-                //     1,
-                //     'rgba(85,124,151,0.99)'
-                // ],
-                // 'sky-gradient-center': [180, 0],
-                // 'sky-gradient-radius': 90,
-                // 'sky-opacity': [
-                //     'interpolate',
-                //     ['exponential', 0.1],
-                //     ['zoom'],
-                //     10,
-                //     0,
-                //     22,
-                //     1
-                // ]
-                'sky-type': 'atmosphere',
+                    }
 
-                // 清晨
-                // 'sky-atmosphere-sun': [30.0, 85.0],
-                // 'sky-atmosphere-color': 'rgba(129,227,239,0.75)',
-                // 'sky-atmosphere-halo-color': "rgba(116,116,126,0.52)",
-                // 'sky-atmosphere-sun-intensity': 2
-                 // 暴雨将至
-                // 'sky-atmosphere-sun': [45.0, 89.0],
-                // 'sky-atmosphere-sun-intensity': 6,
-                // 'sky-atmosphere-color': 'rgba(6,110,192,0.49)',
-                // 'sky-atmosphere-halo-color': "rgba(1,8,87,0.15)",
-                // 'sky-opacity': 0.44444
 
-                 // 傍晚
-                // 'sky-atmosphere-sun': [10.0, 90.0],
-                // 'sky-atmosphere-sun-intensity': 1
-
-                  // 夜晚（稍微亮一点）
-                // 'sky-atmosphere-sun': [45.0, 87.0],
-                // 'sky-atmosphere-sun-intensity': 10,
-                // 'sky-atmosphere-color': 'rgba(1,25,77,0.64)',
-                // 'sky-atmosphere-halo-color': "rgba(2,12,126,0.01)",
-                // 'sky-opacity': 0.44444
-
-                 // 漆黑的夜
-                // 'sky-atmosphere-sun': [45.0, 88.0],
-                // 'sky-atmosphere-sun-intensity': 15,
-                // 'sky-atmosphere-color': 'rgba(22,23,26,0.28)',
-                // 'sky-atmosphere-halo-color': "rgba(3,17,169,0.01)",
-                // 'sky-opacity': 0.5
-
-                // 阴天（看不见太阳）
-                // 'sky-atmosphere-sun': [0.0, 60.0],
-                // 'sky-atmosphere-sun-intensity': 20,
-                // 'sky-atmosphere-color': 'rgba(191,195,206,0.5)',
-                // 'sky-atmosphere-halo-color': "rgba(18,19,19,0.56)",
-                // 'sky-opacity': 0.666
-
-                // 晴天
-                'sky-atmosphere-sun': [30.0, 83.0],
-                'sky-atmosphere-color': 'rgba(129,227,239,0.75)',
-                'sky-atmosphere-halo-color': "rgba(100,100,108,0.52)",
-                'sky-atmosphere-sun-intensity': 8
-                
+                ]
             }
+        ).addTo(layer);
+
+        // 加载天空图层
+        var glMap = baseLayer.getGlMap();
+        glMap.on('load', function () {
+            glMap.addLayer({
+                'id': 'sky',
+                'type': 'sky',
+                'paint': {
+                    // 'sky-type': 'atmosphere',
+                    // "sky-atmosphere-sun": [45.0, 90.0],
+                    // 'sky-atmosphere-sun-intensity': 10,
+                    // // 'sky-type': 'gradient',
+                    // 'sky-gradient': [
+                    //     'interpolate',
+                    //     ['linear'],
+                    //     ['sky-radial-progress'],
+                    //     0.8,
+                    //     'rgba(17,156,255,0.28)',
+                    //     1,
+                    //     'rgba(85,124,151,0.99)'
+                    // ],
+                    // 'sky-gradient-center': [180, 0],
+                    // 'sky-gradient-radius': 90,
+                    // 'sky-opacity': [
+                    //     'interpolate',
+                    //     ['exponential', 0.1],
+                    //     ['zoom'],
+                    //     10,
+                    //     0,
+                    //     22,
+                    //     1
+                    // ]
+                    'sky-type': 'atmosphere',
+
+                    // 清晨
+                    // 'sky-atmosphere-sun': [30.0, 85.0],
+                    // 'sky-atmosphere-color': 'rgba(129,227,239,0.75)',
+                    // 'sky-atmosphere-halo-color': "rgba(116,116,126,0.52)",
+                    // 'sky-atmosphere-sun-intensity': 2
+                    // 暴雨将至
+                    // 'sky-atmosphere-sun': [45.0, 89.0],
+                    // 'sky-atmosphere-sun-intensity': 6,
+                    // 'sky-atmosphere-color': 'rgba(6,110,192,0.49)',
+                    // 'sky-atmosphere-halo-color': "rgba(1,8,87,0.15)",
+                    // 'sky-opacity': 0.44444
+
+                    // 傍晚
+                    // 'sky-atmosphere-sun': [10.0, 90.0],
+                    // 'sky-atmosphere-sun-intensity': 1
+
+                    // 夜晚（稍微亮一点）
+                    // 'sky-atmosphere-sun': [45.0, 87.0],
+                    // 'sky-atmosphere-sun-intensity': 10,
+                    // 'sky-atmosphere-color': 'rgba(1,25,77,0.64)',
+                    // 'sky-atmosphere-halo-color': "rgba(2,12,126,0.01)",
+                    // 'sky-opacity': 0.44444
+
+                    // 漆黑的夜
+                    // 'sky-atmosphere-sun': [45.0, 88.0],
+                    // 'sky-atmosphere-sun-intensity': 15,
+                    // 'sky-atmosphere-color': 'rgba(22,23,26,0.28)',
+                    // 'sky-atmosphere-halo-color': "rgba(3,17,169,0.01)",
+                    // 'sky-opacity': 0.5
+
+                    // 阴天（看不见太阳）
+                    // 'sky-atmosphere-sun': [0.0, 60.0],
+                    // 'sky-atmosphere-sun-intensity': 20,
+                    // 'sky-atmosphere-color': 'rgba(191,195,206,0.5)',
+                    // 'sky-atmosphere-halo-color': "rgba(18,19,19,0.56)",
+                    // 'sky-opacity': 0.666
+
+                    // 晴天
+                    'sky-atmosphere-sun': [30.0, 83.0],
+                    'sky-atmosphere-color': 'rgba(129,227,239,0.75)',
+                    'sky-atmosphere-halo-color': "rgba(100,100,108,0.52)",
+                    'sky-atmosphere-sun-intensity': 8
+
+                }
+            });
+            // glMap.setFog({
+            // 'range': [-1, 2],
+            // 'horizon-blend': 0.3,
+            // 'color': '#242B4B',
+            // 'high-color': '#161B36',
+            // 'space-color': '#0B1026',
+            // 'star-intensity': 0.8
+            // })
+
         });
-        // glMap.setFog({
-        // 'range': [-1, 2],
-        // 'horizon-blend': 0.3,
-        // 'color': '#242B4B',
-        // 'high-color': '#161B36',
-        // 'space-color': '#0B1026',
-        // 'star-intensity': 0.8
-        // })
-     
-    });
-    // function initGui() {
-    //         var bloomPass = threeLayer.bloomPass;
-    //         var params = {
+        // function initGui() {
+        //         var bloomPass = threeLayer.bloomPass;
+        //         var params = {
 
-    //             bloom: true,
-    //             threshold: bloomPass.threshold,
-    //             strength: bloomPass.strength,
-    //             radius: bloomPass.radius,
-    //         };
-    //         var gui = new dat.GUI({
-    //             width: 300
-    //         });
-    //         var bloomF = gui.addFolder('bloom');
-    //         bloomF.open();
-    //         bloomF.add(params, 'bloom').name('enable').onChange(function () {
-    //             threeLayer.bloomEnable = params.bloom;
-    //         });
-    //         bloomF.add(params, 'threshold', -5, 5).onChange(function () {
-    //             bloomPass.threshold = params.threshold;
-    //         });
-    //         bloomF.add(params, 'strength', 0, 8).onChange(function () {
-    //             bloomPass.strength = params.strength;
-    //         });
-    //         bloomF.add(params, 'radius', 0, 5).onChange(function () {
-    //             bloomPass.radius = params.radius;
-    //         });
-    //     }
-     //扫光
-     var spotLight, spotLightHelper, vs = [], spotLightHeight = 50, idx = -1;
+        //             bloom: true,
+        //             threshold: bloomPass.threshold,
+        //             strength: bloomPass.strength,
+        //             radius: bloomPass.radius,
+        //         };
+        //         var gui = new dat.GUI({
+        //             width: 300
+        //         });
+        //         var bloomF = gui.addFolder('bloom');
+        //         bloomF.open();
+        //         bloomF.add(params, 'bloom').name('enable').onChange(function () {
+        //             threeLayer.bloomEnable = params.bloom;
+        //         });
+        //         bloomF.add(params, 'threshold', -5, 5).onChange(function () {
+        //             bloomPass.threshold = params.threshold;
+        //         });
+        //         bloomF.add(params, 'strength', 0, 8).onChange(function () {
+        //             bloomPass.strength = params.strength;
+        //         });
+        //         bloomF.add(params, 'radius', 0, 5).onChange(function () {
+        //             bloomPass.radius = params.radius;
+        //         });
+        //     }
+        //扫光
+        var spotLight, spotLightHelper, vs = [], spotLightHeight = 50, idx = -1;
 
-    function initSpotLight() {
-        const lnglat = [121.16561299823, 30.091971308151167];
-        const circle = new maptalks.Circle(lnglat, 1300, {
-            numberOfShellPoints: 300
-        });
-        const shell = circle.getShell();
+        function initSpotLight() {
+            const lnglat = [121.16561299823, 30.091971308151167];
+            const circle = new maptalks.Circle(lnglat, 1300, {
+                numberOfShellPoints: 300
+            });
+            const shell = circle.getShell();
 
-        vs = shell.map(coordinate => {
-            return threeLayer.coordinateToXYZ(coordinate, spotLightHeight);
-        });
-        spotLight = new THREE.SpotLight('red');
-        spotLight.intensity = 200;
-        spotLight.angle = 0.15;
-        // spotLight.penumbra = 0.05;
-        // spotLight.decay = 2;
-        spotLight.distance = 100;
-        const size = 0.001;
-        const cubeGeometry = new THREE.CubeGeometry(size, size, size);
-        const cubeMaterial = new THREE.MeshLambertMaterial({
-            color: 'yellow'
-        });
-        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        const v1 = threeLayer.coordinateToXYZ(lnglat)
-        cube.position.copy(v1);
-        spotLight.target = cube;
+            vs = shell.map(coordinate => {
+                return threeLayer.coordinateToXYZ(coordinate, spotLightHeight);
+            });
+            spotLight = new THREE.SpotLight('red');
+            spotLight.intensity = 200;
+            spotLight.angle = 0.15;
+            // spotLight.penumbra = 0.05;
+            // spotLight.decay = 2;
+            spotLight.distance = 100;
+            const size = 0.001;
+            const cubeGeometry = new THREE.CubeGeometry(size, size, size);
+            const cubeMaterial = new THREE.MeshLambertMaterial({
+                color: 'yellow'
+            });
+            const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            const v1 = threeLayer.coordinateToXYZ(lnglat)
+            cube.position.copy(v1);
+            spotLight.target = cube;
 
-        threeLayer.addMesh(spotLight);
-        threeLayer.addMesh(cube);
+            threeLayer.addMesh(spotLight);
+            threeLayer.addMesh(cube);
 
-        spotLightHelper = new THREE.SpotLightHelper(spotLight);
-        // threeLayer.addMesh(spotLightHelper);
+            spotLightHelper = new THREE.SpotLightHelper(spotLight);
+            // threeLayer.addMesh(spotLightHelper);
 
-        const lineMaterial = new THREE.LineBasicMaterial({
-            linewidth: 1,
-            // color: 0x00ffff,
-            // opacity: 0.8,
-            transparent: true
-        });
-        const line = threeLayer.toLine(new maptalks.LineString(shell), { altitude: 0 }, lineMaterial);
-        //threeLayer.addMesh(line);
-    }
-    
-    function initGui() {
-        var gui = new dat.GUI({
+            const lineMaterial = new THREE.LineBasicMaterial({
+                linewidth: 1,
+                // color: 0x00ffff,
+                // opacity: 0.8,
+                transparent: true
+            });
+            const line = threeLayer.toLine(new maptalks.LineString(shell), { altitude: 0 }, lineMaterial);
+            //threeLayer.addMesh(line);
+        }
+
+        function initGui() {
+            var gui = new dat.GUI({
                 width: 300
             });
             //设置建筑颜色gui
-            const building =gui.addFolder('building');
+            const building = gui.addFolder('建筑');
             building.close();
             var cityparams = {
-            buildingColor1:material3.color.getStyle(),
-            buildingColor2:material4.color.getStyle(),
+                buildingColor1: material3.color.getStyle(),
+                buildingColor2: material4.color.getStyle(),
             };
-            building.addColor(cityparams , 'buildingColor1').onChange(function () {
-            material3.color.set(cityparams.buildingColor1);
+            building.addColor(cityparams, 'buildingColor1').name('建筑颜色1').onChange(function () {
+                material3.color.set(cityparams.buildingColor1);
             });
-            building.addColor(cityparams , 'buildingColor2').onChange(function () {
-            material4.color.set(cityparams.buildingColor2);
+            building.addColor(cityparams, 'buildingColor2').name('建筑颜色2').onChange(function () {
+                material4.color.set(cityparams.buildingColor2);
             });
             //设置围墙gui
-            const Wall =gui.addFolder('Wall');
+            const Wall = gui.addFolder('围栏');
             Wall.close();
             var wallparams = {
-                    add: true,
-                    color: Wallmaterial.uniforms.color.value.getStyle(),
-                    show: true,
-                    opacity: Wallmaterial.uniforms.opacity.value,
-                    // speed: groundWall.getOptions().speed
-                };
-            Wall.add(wallparams, 'add').onChange(function () {
+                add: true,
+                color: Wallmaterial.uniforms.color.value.getStyle(),
+                show: true,
+                opacity: Wallmaterial.uniforms.opacity.value,
+                // speed: groundWall.getOptions().speed
+            };
+            Wall.add(wallparams, 'add').name('添加').onChange(function () {
                 if (wallparams.add) {
                     threeLayer.addMesh(groundWall);
                 } else {
                     threeLayer.removeMesh(groundWall);
                 }
             });
-            Wall.addColor(wallparams, 'color').name('wall color').onChange(function () {
-                    Wallmaterial.uniforms.color.value.setStyle(wallparams.color);
+            Wall.addColor(wallparams, 'color').name('颜色').onChange(function () {
+                Wallmaterial.uniforms.color.value.setStyle(wallparams.color);
             })
-            Wall.add(wallparams, 'opacity', 0, 1).onChange(function () {
-                    Wallmaterial.uniforms.opacity.value = wallparams.opacity;
-                });
+            Wall.add(wallparams, 'opacity', 0, 1).name('透明度').onChange(function () {
+                Wallmaterial.uniforms.opacity.value = wallparams.opacity;
+            });
             // Wall.add(wallparams, 'speed', 0.001, 0.3, 0.00001).onChange(function () {
             //     groundWall.options.speed = wallparams.speed;
             // });
@@ -1682,113 +1683,135 @@ var layer = new maptalks.VectorLayer('vector').addTo(map);
                 spotLightAngle: spotLight.angle,
                 spotLightHeight: spotLightHeight
             };
-            const spotLightF = gui.addFolder('spotLight');
+            const spotLightF = gui.addFolder('扫光');
             spotLightF.close();
-            spotLightF.addColor(lightparams, 'spotLightColor').onChange(function () {
+            spotLightF.addColor(lightparams, 'spotLightColor').name('颜色').onChange(function () {
                 spotLight.color.set(lightparams.spotLightColor);
             });
-            spotLightF.add(lightparams, 'spotLightIntensity', 0, 200).onChange(function () {
+            spotLightF.add(lightparams, 'spotLightIntensity', 0, 200).name('强度').onChange(function () {
                 spotLight.intensity = lightparams.spotLightIntensity;
             });
-            spotLightF.add(lightparams, 'spotLightDistance', 0, 100).onChange(function () {
+            spotLightF.add(lightparams, 'spotLightDistance', 0, 100).name('距离').onChange(function () {
                 spotLight.distance = lightparams.spotLightDistance;
             });
-            spotLightF.add(lightparams, 'spotLightAngle', 0, Math.PI).onChange(function () {
+            spotLightF.add(lightparams, 'spotLightAngle', 0, Math.PI).name('宽度范围').onChange(function () {
                 spotLight.angle = lightparams.spotLightAngle;
             });
-            spotLightF.add(lightparams, 'spotLightHeight', 0, 600).onChange(function () {
+            spotLightF.add(lightparams, 'spotLightHeight', 0, 600).name('高度范围').onChange(function () {
                 const z = threeLayer.altitudeToVector3(lightparams.spotLightHeight, lightparams.spotLightHeight).x;
                 vs.forEach(v => {
                     v.z = z;
                 });
 
             });
+
+            var ringparams = {
+                add: true,
+                color: ringmaterial.uniforms.color.value.getStyle(),
+                show: true,
+                altitude: 0,
+                speed: ringObj.getOptions().speed
+            };
+
+            const ring = gui.addFolder('冲击环');
+            ring.close();
+
+            ring.addColor(ringparams, 'color').name('冲击环颜色').name('circle color').onChange(function () {
+                ringmaterial.uniforms.color.value.setStyle(ringparams.color);
+            });
+
+            ring.add(ringparams, 'speed', 0.001, 0.3, 0.00001).name('冲击环速度').onChange(function () {
+                ringObj.options.speed = ringparams.speed;
+            });
+
+
+
             //设置辉光gui
             var bloomPass = threeLayer.bloomPass;
-            var bloomparams ={
+            var bloomparams = {
                 bloom: true,
                 threshold: bloomPass.threshold,
                 strength: bloomPass.strength,
                 radius: bloomPass.radius,
             }
-            var bloomF = gui.addFolder('bloom');
-            bloomF.open();
-            bloomF.add(bloomparams, 'bloom').name('enable').onChange(function () {
+            var bloomF = gui.addFolder('辉光');
+            bloomF.close();
+            bloomF.add(bloomparams, 'bloom').name('添加').onChange(function () {
                 threeLayer.bloomEnable = bloomparams.bloom;
             });
-            bloomF.add(bloomparams, 'threshold', -5, 5).onChange(function () {
+            bloomF.add(bloomparams, 'threshold', -5, 5).name('门槛').onChange(function () {
                 bloomPass.threshold = bloomparams.threshold;
             });
-            bloomF.add(bloomparams, 'strength', 0, 8).onChange(function () {
+            bloomF.add(bloomparams, 'strength', 0, 8).name('强度').onChange(function () {
                 bloomPass.strength = bloomparams.strength;
             });
-            bloomF.add(bloomparams, 'radius', 0, 5).onChange(function () {
+            bloomF.add(bloomparams, 'radius', 0, 5).name('半径').onChange(function () {
                 bloomPass.radius = bloomparams.radius;
             });
-        var flyparams = {
-                    fly: mapFly
-                };
-                gui.add(flyparams, 'fly');
-                var views = [
-                    { "center": [121.166361299823, 30.051971308151167], "zoom": 18, "pitch": 66.40000000000003, "bearing": -18.600000000000136 },
-                    { "center": [121.149361299823, 30.02271308151167], "zoom": 18, "pitch": 58.000000000000014, "bearing": 15.600000000000366 },
-                    { "center": [121.13361299823, 30.051971308151167], "zoom": 18, "pitch": 68.39999999999999, "bearing": -72.60000000000002 },
-                    { "center": [121.149361299823, 30.069971308151167], "zoom": 18, "pitch": 53.20000000000006, "bearing": 10.800000000000296 },
-                ];
+            var flyparams = {
+                '多点巡航': mapFly
+            };
+            gui.add(flyparams, '多点巡航');
+            var views = [
+                { "center": [121.166361299823, 30.051971308151167], "zoom": 18, "pitch": 66.40000000000003, "bearing": -18.600000000000136 },
+                { "center": [121.149361299823, 30.02271308151167], "zoom": 18, "pitch": 58.000000000000014, "bearing": 15.600000000000366 },
+                { "center": [121.13361299823, 30.051971308151167], "zoom": 18, "pitch": 68.39999999999999, "bearing": -72.60000000000002 },
+                { "center": [121.149361299823, 30.069971308151167], "zoom": 18, "pitch": 53.20000000000006, "bearing": 10.800000000000296 },
+            ];
 
-                var idx = 0;
+            var idx = 0;
 
-                function mapFly() {
-                    if (idx < views.length) {
-                        map.animateTo(views[idx], {
-                            duration: 5000
-                        }, function (frames) {
-                            if (frames.state.playState === 'finished') {
-                                idx++;
-                                if (idx === 6) {
-                                    uplines();
-                                } else {
-                                    mapFly();
-                                }
-                            }
-                        });
-                    }
-                }
-
-                var MAXHEIGHT = 100000;
-                function uplines(isDown) {
-                    const player = this._showPlayer = maptalks.animation.Animation.animate({
-                        'height': MAXHEIGHT
-                    }, {
-                        'duration': 2000,
-                        'easing': 'out'
-                    }, frame => {
-                        if (frame.state.playState === 'finished') {
-                            if (!isDown) {
-                                uplines(true);
+            function mapFly() {
+                if (idx < views.length) {
+                    map.animateTo(views[idx], {
+                        duration: 5000
+                    }, function (frames) {
+                        if (frames.state.playState === 'finished') {
+                            idx++;
+                            if (idx === 6) {
+                                uplines();
                             } else {
-                                // idx++;
                                 mapFly();
                             }
                         }
-                        let height;
-                        if (!isDown) {
-                            height = frame.styles.height;
-                        } else {
-                            height = MAXHEIGHT - frame.styles.height;
-                        }
-                        lines.forEach(line => {
-                            line.setAltitude(height);
-                        });
-                        lineTrails.forEach(line => {
-                            line.setAltitude(height);
-                        });
                     });
-                    player.play();
                 }
+            }
+
+            var MAXHEIGHT = 100000;
+            function uplines(isDown) {
+                const player = this._showPlayer = maptalks.animation.Animation.animate({
+                    'height': MAXHEIGHT
+                }, {
+                    'duration': 2000,
+                    'easing': 'out'
+                }, frame => {
+                    if (frame.state.playState === 'finished') {
+                        if (!isDown) {
+                            uplines(true);
+                        } else {
+                            // idx++;
+                            mapFly();
+                        }
+                    }
+                    let height;
+                    if (!isDown) {
+                        height = frame.styles.height;
+                    } else {
+                        height = MAXHEIGHT - frame.styles.height;
+                    }
+                    lines.forEach(line => {
+                        line.setAltitude(height);
+                    });
+                    lineTrails.forEach(line => {
+                        line.setAltitude(height);
+                    });
+                });
+                player.play();
+            }
         }
-    
- </script>
+
+    </script>
 </body>
 
 </html>
