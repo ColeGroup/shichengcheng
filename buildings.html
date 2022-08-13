@@ -112,8 +112,6 @@ var stats
 var buildingMeshes1 = [];
         var buildingMeshes2 = [];
         var material3 = getBuildingsMaterial3();
-            // material3.vertexColors = THREE.VertexColors;
-            // const topColor1 = new THREE.Color('rgb(116,125,142)');
         function getBuildingsMaterial3() {
             //建筑贴图
             // const texture = new THREE.TextureLoader().load('./model/11.png');
@@ -130,8 +128,6 @@ var buildingMeshes1 = [];
             return material;
         }
         var material4 = getBuildingsMaterial4();
-            // material4.vertexColors = THREE.VertexColors;
-            // const topColor2 = new THREE.Color('rgb(0,255,0)');
         function getBuildingsMaterial4() {
             // const texture2 = new THREE.TextureLoader().load('./model/11.png');
             // texture2.needsUpdate = true; //使用贴图时进行更新
@@ -178,35 +174,7 @@ var buildingMeshes1 = [];
                     interactive: false
                 }, material3);
                 mesh3.getObject3d().layers.enable(1);
-                // const bufferGeometry = mesh3.getObject3d().geometry;
-                // const geometry = new THREE.Geometry().fromBufferGeometry(bufferGeometry);
-                // const { vertices, faces, faceVertexUvs } = geometry;
-                // for (let i = 0, len = faces.length; i < len; i++) {
-                //     const { a, b, c } = faces[i];
-                //     const p1 = vertices[a], p2 = vertices[b], p3 = vertices[c];
-                //     //top face
-                //     if (p1.z > 0 && p2.z > 0 && p3.z > 0) {
-                //         const vertexColors = faces[i].vertexColors;
-                //         for (let j = 0, len1 = vertexColors.length; j < len1; j++) {
-                //             vertexColors[j].r = topColor1.r;
-                //             vertexColors[j].g = topColor1.g;
-                //             vertexColors[j].b = topColor1.b;
-                //         }
-                //         const uvs = faceVertexUvs[0][i];
-                //         for (let j = 0, len1 = uvs.length; j < len1; j++) {
-                //             uvs[j].x = 0;
-                //             uvs[j].y = 0;
-                //         }
-                //     }
-                // }
-                // mesh3.getObject3d().geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-                // bufferGeometry.dispose();
-                // geometry.dispose();
-
                 buildingMeshes1.push(mesh3);
-                // var outLine1 = new OutLine(mesh3, { interactive: false }, lineMaterial1, threeLayer);
-                // buildingMeshes1.push(outLine1);
-                // mesh3.getObject3d().layers.enable(1);
                 
             }
              
@@ -217,88 +185,13 @@ var buildingMeshes1 = [];
                         interactive: false
                     }, material4);
                     mesh4.getObject3d().layers.enable(1);
-                    // const bufferGeometry = mesh4.getObject3d().geometry;
-                    // const geometry = new THREE.Geometry().fromBufferGeometry(bufferGeometry);
-                    // const { vertices, faces, faceVertexUvs } = geometry;
-                    //     for (let i = 0, len = faces.length; i < len; i++) {
-                    //         const { a, b, c } = faces[i];
-                    //         const p1 = vertices[a], p2 = vertices[b], p3 = vertices[c];
-                    //         //top face
-                    //         if (p1.z > 0 && p2.z > 0 && p3.z > 0) {
-                    //             const vertexColors = faces[i].vertexColors;
-                    //             for (let j = 0, len1 = vertexColors.length; j < len1; j++) {
-                    //                 vertexColors[j].r = topColor2.r;
-                    //                 vertexColors[j].g = topColor2.g;
-                    //                 vertexColors[j].b = topColor2.b;
-                    //             }
-                    //             const uvs = faceVertexUvs[0][i];
-                    //             for (let j = 0, len1 = uvs.length; j < len1; j++) {
-                    //                 uvs[j].x = 0;
-                    //                 uvs[j].y = 0;
-                    //             }
-                    //         }
-                    //     }
-                    // mesh4.getObject3d().geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-                    // bufferGeometry.dispose();
-                    // geometry.dispose();
-                    buildingMeshes2.push(mesh4);
-                    // var outLine2 = new OutLine(mesh4, { interactive: false }, lineMaterial2, threeLayer);
-                    // buildingMeshes2.push(outLine2);
-                    // threeLayer.addMesh(buildingMeshes2)
-                
+                    buildingMeshes2.push(mesh4);        
              } 
             }); 
                 threeLayer.addMesh(buildingMeshes1)
                 threeLayer.addMesh(buildingMeshes2)
             });
                     }
-
-            
-
-                // for (let feature of features) {
-                //     let height = feature.properties.height || 1;
-                    // let material3 = new THREE.MeshPhongMaterial({
-                    //     color: getColor(height)
-                    // });
-                    // let material3 = new THREE.MeshBasicMaterial({
-                    //     color: getColor(height),
-                    //     transparent: true,
-                    //     opacity:0.5
-                    // })
-                    // let extrudePolygon = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                    //     interactive: false,
-                    //     height: extrudeFactor * height,
-                    //     topColor: '#fff',
-                    //     // bottomColor:'#fff'
-                        
-                    // }, material3);
-                    // threeLayer.addMesh(extrudePolygon);
-
-                    //根据建筑物不同设置不同颜色
-                    // if(height < 50) {
-                    // let extrudePolygon = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                    //     // let mesh1 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                    //     interactive: false,
-                    //     height: extrudeFactor * height,
-                    //     topColor: '#fff',
-                    // }, material3);
-                    // meshs1.push(mesh1)
-                    // var outLine1 = new OutLine(mesh1, { interactive: false }, lineMaterial1, threeLayer);
-                    //     meshs1.push(outLine1);
-                    // threeLayer.addMesh(extrudePolygon);
-                    // threeLayer.addMesh(meshs1);
-                    // }
-                // else if(height >= 50){
-                //     let extrudePolygon1 = threeLayer.toExtrudePolygon(maptalks.GeoJSON.toGeometry(feature), {
-                //         interactive: false,
-                //         height: extrudeFactor * height,
-                //         topColor: '#fff',
-                //     }, material4);
-                //     threeLayer.addMesh(extrudePolygon1);
-                //  }
-                // }
-        
-
         
 
         //查看fps频率渲染
