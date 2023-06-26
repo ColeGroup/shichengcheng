@@ -3,37 +3,29 @@
 
 <head>
     <title>建筑数据量-余姚市</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.6/build/dat.gui.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.css">
-    <script type="text/javascript" src="https://unpkg.com/maptalks/dist/maptalks.js"></script>
-    <!-- <script type="text/javascript" src="./js/maptalks.js"></script> -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/libs/stats.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/maptalks.three@latest/dist/maptalks.three.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/mapbox-gl/2.9.1/mapbox-gl.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/mapbox-gl/2.9.1/mapbox-gl.css" rel="stylesheet">
+	<script src="js/dat.gui.min.js"></script>
+    <link rel="stylesheet" href="js/maptalks.css">
+    <script src="js/maptalks.js"></script>
+    <script src="js/three.min124.js"></script>
+    <script src="js/stats124.min.js"></script>
+    <script src="js/maptalks.three.js"></script>
+    <link rel="stylesheet" href="js/mapbox-gl2.9.1.css">
+    <script src="js/mapbox-gl2.9.1.js"></script>
     <script src="./js/maptalks.mapboxgl.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/@maptalks/gl/dist/maptalksgl.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/three@0.124.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="js/maptalksgl.js"></script>
     <script type="text/javascript" src="./js/geoutil.js"></script>
     <script type="text/javascript" src="./js/THREE.MeshLine.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/shaders/CopyShader.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-    <!-- <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/three@0.124.0/examples/js/postprocessing/UnrealBloomPass.js"></script> -->
+    <script src="js/GLTFLoader124.js"></script>
+    <script src="js/CopyShader124.js"></script>
+    <script src="js/EffectComposer124.js"></script>
+    <script src="js/tween.umd.js"></script>
+    <script src="js/RenderPass124.js"></script>
+    <script src="js/ShaderPass124.js"></script>
     <script type="text/javascript" src="./js/UnrealBloomPass.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.0/mapbox-gl-language.js'></script>
+    <script src="js/mapbox-gl-language.js"></script>
+    <script src="js/LuminosityHighPassShader124.js"></script>
+    <script src="js/maptaljs"></script>
+    <script src="js/maptalks-gl-layers.js"></script>
 
 
     <style>
@@ -1208,6 +1200,8 @@
                 ]
             }
         ).addTo(layer);
+
+        
 
         //精灵图2
 

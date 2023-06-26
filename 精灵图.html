@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://www.yanhuangxueyuan.com/3D/example/three.min.js"></script>
+    <script src="./js/dat.gui.js"></script>
+    <script src="./js/OrbitControls.js"></script>
+    <script src="./js/makeTextSprite.js"></script>
+    <title>sence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+</body>
+<script>
+    const FRESH_TIME = 3000; // 数据刷新时间
+    // 创建场景
+    let Scene = new THREE.Scene();
+
+    // 创建相机
+    let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.x = -50;
+    camera.position.y = 30;
+    camera.position.z = 50;
+    camera.lookAt(Scene.position);  // 视角
+
+    // 创建渲染器
+    let renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(new THREE.Color(0x000000));
+    renderer.shadowMap.enabled = true;
+    document.body.appendChild(renderer.domElement);
+
+
+    // 创建平面
+    let planeGeometry = new THREE.PlaneGeometry(60, 60, 1, 1); // 平面网格
+    let textureLoader = new THREE.TextureLoader();
+    let texture = textureLoader.load('./img/3.jpg');
+    var textureNormal = textureLoader.load('./img/3.jpg');
+    // 加载高光贴图
+    let planeMaterial = new THREE.MeshPhongMaterial({
+        // specular: 0xff0000,//高光部分的颜色
+        shininess: 30,//高光部分的亮度，默认30
+        map: texture,// 普通纹理贴图
+        roughness: 0.3,
+        lightMap: textureNormal,
+        // normalMap: textureNormal, //法线贴图
+        bumpScale: 3
+    }); //材质对象Material
+
+
+
+    // let planeMaterial = new THREE.MeshLambertMaterial({color: 0xcccccc});
+    let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane.rotation.x = -0.5 * Math.PI;
+    plane.position.x = 0;
+    plane.name = '平面物体ID=' + 1;
+    plane.position.y = 0;
+    plane.position.z = 0;
+    plane.receiveShadow = true;
+    Scene.add(plane);
+
+    // 创建立方体
+    let boxGeometry = new THREE.BoxGeometry(10, 10, 10, 200);
+    let texture1 = textureLoader.load('./img/tim.jpg');
+    let boxGeometryMaterial = new THREE.MeshLambertMaterial({
+        // specular: 0xff0000,//高光部分的颜色
+        shininess: 30,//高光部分的亮度，默认30
+        normalScale: new THREE.Vector2(2.2, 2.2),
+        map: texture1,// 普通纹理贴图
+        normalMap: textureNormal, //法线贴图
+        bumpMap: textureNormal,
+        bumpScale: 0.3
+    });
+    let box = new THREE.Mesh(boxGeometry, boxGeometryMaterial);
+    box.name = '正方物体ID=' + 2;
+    box.position.x = 10;
+    box.position.y = 5;
+    box.position.z = 0;
+    box.castShadow = true;
+    Scene.add(box);
+
+    // 点击事件
+    let raycaster = new THREE.Raycaster();
+    let mouse = new THREE.Vector2();
+    // 点击了哪个模型
+    function clickEvent() {
+        if (event.target.tagName == 'CANVAS') {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            Scene.updateMatrixWorld(true);
+            // 通过鼠标点的位置和当前相机的矩阵计算出raycaster
+            raycaster.setFromCamera(mouse, camera);
+            // 获取raycaster直线和所有模型相交的数组集合
+            let intersects = raycaster.intersectObjects(Scene.children, true);
+            if (intersects[0]) {
+                console.log(intersects[0]);
+            }
+        }
+    }
+    window.addEventListener('click', clickEvent, false);
+    // 创建灯光
+
+    // 点光源
+    let spotLight = new THREE.SpotLight(0xffffff);
+    spotLight.position.set(-60, 40, -20);
+    spotLight.castShadow = true;
+    Scene.add(spotLight);
+
+    // 平行光
+    let directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    // 设置光源的方向：通过光源position属性和目标指向对象的position属性计算
+    directionalLight.position.set(-90, 80, -20);
+    // 方向光指向对象网格模型mesh2，可以不设置，默认的位置是0,0,0
+    directionalLight.target = box;
+    Scene.add(directionalLight);
+
+    // 环境光
+    let ambient = new THREE.AmbientLight(0x444444);
+    Scene.add(ambient);//环境光对象添加到scene场景中
+
+    let gui = {
+        bump: 0.03,
+        animation: false
+    };
+
+
+    //创建控件对象
+    let controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    // 添加辅助坐标轴
+    let axisHelper = new THREE.AxisHelper(250);
+    Scene.add(axisHelper);
+
+    // 清空雪碧图
+    function clearSprite(type = 'Sprite') {
+        const children = [];
+        (Scene.children || []).forEach((v, idx) => {
+            if (v.type !== type) {
+                children.push(v);
+            }
+        });
+        Scene.children = children;
+    }
+
+    // 循环数据,添加精灵标签
+    function loopData() {
+        clearSprite();
+        (Scene.children || []).forEach((v, idx) => {
+            if (v.type == 'Mesh') {
+                const text = v.name + new Date().getTime();
+                const color = new Date().getTime() % 2 == 1 ? 'rgba(234, 42, 6, 1)' : 'rgba(0, 0, 0, 1.0)'
+                let sprite = makeTextSprite(text, {
+                    color: color
+                });
+                sprite.center = new THREE.Vector2(0, 0);
+                Scene.add(sprite);
+                sprite.position.set(v.position.x, v.position.y + 5, v.position.z);
+            }
+        });
+    }
+
+    const timeId = setInterval(_ => {
+        loopData();
+    }, FRESH_TIME);
+
+    loopData();
+
+    function render() {
+        renderer.render(Scene, camera);
+        requestAnimationFrame(render);
+    }
+    render();
+
+</script>
+
+</html>
